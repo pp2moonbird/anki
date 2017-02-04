@@ -7,3 +7,15 @@
 .margin-top{
     margin-top:20px; 
 }
+
+td.edit{
+    display: none;
+}
+
+tr.editing td.edit{
+    display: block;
+}
+
+tr.editing td.view{
+    display: none;
+}

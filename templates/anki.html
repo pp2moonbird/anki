@@ -40,13 +40,24 @@
                                 <th class="col-md-1">Edit</th>
                                 <th class="col-md-1">Delete</th>
                             </tr>
-                            <tr v-for="deck in decks">
-                                <td>{{deck.deck}}</td>
-                                <td>
+                            <!-- For each deck -->
+                            <tr v-for="deck in decks" :class="{editing: deck == editedDeck}">
+                                <!-- show details of deck -->
+                                <td class="view" @dblclick="editDeck(deck)">{{deck.deck}}</td>
+                                <td class="view">
                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                 </td>
-                                <td>
+                                <td class="view">
                                     <i class="fa fa-times" aria-hidden="true"></i>
+                                </td>
+                                <td class="edit">
+                                    <input type="text" class="form-control"
+                                        v-model="deck.deck"
+                                        @blur = "cancelEditDeck(deck)"
+                                        @keyup.esc = "cancelEditDeck(deck)"
+                                        v-item-focus="deck==editedDeck"
+                                        @keyup.enter = "doneEditDeck(deck)"
+                                    >
                                 </td>
                             </tr>
                         </table>

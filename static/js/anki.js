@@ -3,6 +3,8 @@ var app = new Vue({
 
     data: {
         newDeckName:'',
+        editedDeck: null,
+        beforeEditDeckNameCache:'',
         decks: [
             {
                 deck:'My first learning deck',
@@ -36,6 +38,41 @@ var app = new Vue({
                 this.decks.push(result);
                 this.newDeckName = '';
             }
+        },
+        
+        editDeck: function(deck){
+            this.beforeEditDeckNameCache = deck.deck;
+            this.editedDeck = deck;
+        },
+
+        cancelEditDeck: function(deck){
+            if(this.editedDeck){
+                deck.deck = this.beforeEditDeckNameCache;
+                this.editedDeck = null;
+            }
+            this.beforeEditDeckNameCache = null;
+        },
+
+        doneEditDeck: function(deck){
+            var index = this.decks.indexOf(deck);
+            if(!this.editedDeck.deck){
+                return;
+            }
+            this.editedDeck = null;
+            this.beforeEditDeckNameCache = null;
+            this.decks.splice(index, 1, deck);
+        }
+    },
+    
+    directives : {
+        'item-focus': function(value){
+            if(!value){
+                return;
+            }
+            var el = this.el;
+                Vue.nextTick(function () {
+                el.focus();
+            });
         }
     }
 })
