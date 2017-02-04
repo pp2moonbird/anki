@@ -21,7 +21,7 @@
         <h1>Tool for Anki</h1>
         <div id="anki" class="container">
             <!-- Deck area -->
-            <div id="deck">
+            <div id="deck" :class="{selected: selectedDeck}">
                 <div class="row">
                     <div class="input-group">
                         <input type="text" class="form-control" v-model="newDeckName" @keyup.enter="addDeck">
@@ -43,7 +43,7 @@
                             <!-- For each deck -->
                             <tr v-for="deck in decks" :class="{editing: deck == editedDeck}">
                                 <!-- show details of deck -->
-                                <td class="view">{{deck.deck}}</td>
+                                <td class="view" @click="selectDeck(deck)">{{deck.deck}}</td>
                                 <td class="view">
                                     <i class="fa fa-pencil" aria-hidden="true" @click="editDeck(deck)"></i>
                                 </td>
@@ -72,9 +72,9 @@
                 <div class="row">
                     <div class="input-group">
                         <div class="input-group-btn">
-                            <button class="btn btn-default" type="button">
-                            <i class="fa fa-reply" aria-hidden="true"></i>
-                        </button>
+                            <button class="btn btn-default" type="button" @click="deselectDeck">
+                                <i class="fa fa-reply" aria-hidden="true" ></i>
+                            </button>
                         </div>
                         <input type="text" class="form-control">
 

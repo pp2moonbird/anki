@@ -19,3 +19,7 @@ tr.editing td.edit{
 tr.editing td.view{
     display: none;
 }
+
+#deck.selected{
+    display: none;
+}

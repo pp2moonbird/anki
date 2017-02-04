@@ -5,6 +5,7 @@ var app = new Vue({
         newDeckName:'',
         editedDeck: null,
         beforeEditDeckNameCache:'',
+        selectedDeck : null,
         decks: [
             {
                 deck:'My first learning deck',
@@ -65,6 +66,14 @@ var app = new Vue({
 
         deleteDeck: function(deck){
             this.decks.$remove(deck);
+        },
+
+        selectDeck: function(deck){
+            this.selectedDeck = deck;
+        },
+
+        deselectDeck: function(){
+            this.selectedDeck = null;
         }
     },
     
