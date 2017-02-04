@@ -22,7 +22,7 @@
         <h1>Tool for Anki</h1>
         <div id="anki" class="container">
             <!-- Deck area -->
-            <div id="deck" :class="{selected: selectedDeck}">
+            <div id="deck" :class="{selectedDeck: selectedDeck}">
                 <div class="row">
                     <div class="input-group">
                         <input type="text" class="form-control" v-model="newDeckName" @keyup.enter="addDeck">
@@ -67,8 +67,8 @@
             </div>
 
             <!-- Card area -->
-            <div id="card">
-
+            <div id="card" :class="{selectedDeck: selectedDeck}">
+                <h2>Deck: {{selectedDeck.deck}}</h2>
                 <!-- Card controls -->
                 <div class="row">
                     <div class="btn-group">
@@ -127,12 +127,14 @@
                     <div class="row">
                         <table class="table">
                             <tr>
-                                <th class="col-md-10">Deck</th>
+                                <th class="col-md-5">Question</th>
+                                <th class="col-md-5">Answer</th>
                                 <th class="col-md-1">Edit</th>
                                 <th class="col-md-1">Delete</th>
                             </tr>
-                            <tr v-for="deck in decks">
-                                <td>{{deck.deck}}</td>
+                            <tr v-for="card in selectedDeck.cards">
+                                <td>{{card.question}}</td>
+                                <td>{{card.answer}}</td>
                                 <td>
                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                 </td>

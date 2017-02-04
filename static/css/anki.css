@@ -20,8 +20,21 @@ tr.editing td.view{
     display: none;
 }
 
-#deck.selected{
+#card h2{
+    margin-left: -15px;
+    margin-top:0px;
+}
+
+#deck.selectedDeck{
     display: none;
+}
+
+#card{
+    display: none;
+}
+
+#card.selectedDeck{
+    display: block;
 }
 
 #question, #answer {
