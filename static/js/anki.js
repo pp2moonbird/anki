@@ -6,6 +6,8 @@ var app = new Vue({
         editedDeck: null,
         beforeEditDeckNameCache:'',
         selectedDeck : null,
+        questionRawText: '',
+        answerRawText: '',
         decks: [
             {
                 deck:'My first learning deck',
@@ -30,6 +32,16 @@ var app = new Vue({
                 ]
             }
         ],
+    },
+
+    computed: {
+        compiledQuestionMarkdown: function(){
+            return marked(this.questionRawText, {sanitize: true})
+        },
+        
+        compiledAnswerMarkdown: function(){
+            return marked(this.answerRawText, {sanitize: true})
+        }
     },
 
     methods: {
@@ -74,7 +86,15 @@ var app = new Vue({
 
         deselectDeck: function(){
             this.selectedDeck = null;
-        }
+        },
+
+        updateQuestion: _.debounce(function (e){
+            this.questionRawText = e.target.value
+        }, 300),
+
+        updateAnswer: _.debounce(function (e){
+            this.answerRawText = e.target.value
+        }, 300)
     },
     
     directives : {

@@ -23,3 +23,25 @@ tr.editing td.view{
 #deck.selected{
     display: none;
 }
+
+#question, #answer {
+    background-color: #f6f6f6;
+}
+
+textarea, #question div, #answer div {
+    display: inline-block;
+    width: 49%;
+    height: 100%;
+    vertical-align: top;
+    box-sizing: border-box;
+}
+
+textarea {
+    border: none; /*remove border*/
+    border-right: 1px solid #ccc;
+    resize: none; /*user can't resize textarea*/
+    outline: none;
+    background-color: #f6f6f6;
+    font-size: 14px;
+    font-family: Consolas, 'Monaco', courier, monospace;
+}
