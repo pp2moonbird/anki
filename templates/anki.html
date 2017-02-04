@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>A simple tool for Anki</title>
+
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/anki.css">
+    <link rel="stylesheet" href="static/css/font-awesome.min.css">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="static/js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="static/js/bootstrap.min.js"></script>
+
+</head>
+{% raw %}
+
+<body>
+    <div class="container">
+        <h1>Tool for Anki</h1>
+        <div id="anki" class="container">
+            <!-- Deck area -->
+            <div id="deck">
+                <div class="row">
+                    <div class="input-group">
+                        <input type="text" class="form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Add Deck</button>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Deck list -->
+                <div class="margin-top">
+                    <div class="row">
+                        <table class="table">
+                            <tr>
+                                <th class="col-md-10">Deck</th>
+                                <th class="col-md-1">Edit</th>
+                                <th class="col-md-1">Delete</th>
+                            </tr>
+                            <tr v-for="deck in decks">
+                                <td>{{deck.deck}}</td>
+                                <td>
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </td>
+                                <td>
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card area -->
+            <div id="card">
+
+                <!-- Card controls -->
+                <div class="row">
+                    <div class="input-group">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                            <i class="fa fa-reply" aria-hidden="true"></i>
+                        </button>
+                        </div>
+                        <input type="text" class="form-control">
+
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                            <button class="btn btn-default" type="button">
+                           <i class="fa fa-list" aria-hidden="true"></i>
+                        </button>
+                            <button class="btn btn-default" type="button">
+                            <i class="fa fa-th-large" aria-hidden="true"></i>
+                        </button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Card Display -->
+            <div class="margin-top">
+                <div class="row">
+                    <table class="table">
+                        <tr>
+                            <th class="col-md-10">Deck</th>
+                            <th class="col-md-1">Edit</th>
+                            <th class="col-md-1">Delete</th>
+                        </tr>
+                        <tr v-for="deck in decks">
+                            <td>{{deck.deck}}</td>
+                            <td>
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </td>
+                            <td>
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+    <script type="text/javascript" src="static/js/vue.js"></script>
+    <script type="text/javascript" src="static/js/vue-resource.js"></script>
+    <script type="text/javascript" src="static/js/anki.js"></script>
+</body>
+{% endraw %}
+
+</html>
