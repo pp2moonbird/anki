@@ -24,9 +24,9 @@
             <div id="deck">
                 <div class="row">
                     <div class="input-group">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" v-model="newDeckName" @keyup.enter="addDeck">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Add Deck</button>
+                            <button class="btn btn-default" type="button" @click="addDeck">Add Deck</button>
                         </span>
                     </div>
                 </div>

@@ -2,6 +2,7 @@ var app = new Vue({
     el: '#anki',
 
     data: {
+        newDeckName:'',
         decks: [
             {
                 deck:'My first learning deck',
@@ -26,5 +27,15 @@ var app = new Vue({
                 ]
             }
         ],
+    },
+
+    methods: {
+        addDeck: function(){
+            if (this.newDeckName){
+                var result = {deck:this.newDeckName, cards:[]};
+                this.decks.push(result);
+                this.newDeckName = '';
+            }
+        }
     }
 })
