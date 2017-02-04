@@ -61,6 +61,10 @@ var app = new Vue({
             this.editedDeck = null;
             this.beforeEditDeckNameCache = null;
             this.decks.splice(index, 1, deck);
+        },
+
+        deleteDeck: function(deck){
+            this.decks.$remove(deck);
         }
     },
     

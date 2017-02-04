@@ -43,12 +43,12 @@
                             <!-- For each deck -->
                             <tr v-for="deck in decks" :class="{editing: deck == editedDeck}">
                                 <!-- show details of deck -->
-                                <td class="view" @dblclick="editDeck(deck)">{{deck.deck}}</td>
+                                <td class="view">{{deck.deck}}</td>
                                 <td class="view">
-                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    <i class="fa fa-pencil" aria-hidden="true" @click="editDeck(deck)"></i>
                                 </td>
                                 <td class="view">
-                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                    <i class="fa fa-times" aria-hidden="true" @click="deleteDeck(deck)"></i>
                                 </td>
                                 <td class="edit">
                                     <input type="text" class="form-control"
