@@ -67,19 +67,26 @@
             </div>
 
             <!-- Card area -->
+            <template v-if="selectedDeck">
             <div id="card" :class="{selectedDeck: selectedDeck}">
-                <h2>Deck: {{selectedDeck.deck}}</h2>
+                <h2 v-if="selectedDeck">Deck: {{selectedDeck.deck}}</h2>
                 <!-- Card controls -->
                 <div class="row">
                     <div class="btn-group">
                         <button class="btn btn-default" type="button" @click="deselectDeck">
                             <i class="fa fa-reply" aria-hidden="true" ></i>
                         </button>
-                        <button class="btn btn-default" type="button">
+                        <button :class="{'btn btn-primary':isSimpleMode, 'btn btn-default':!isSimpleMode}" 
+                            type="button"
+                            @click=selectSimpleMode
+                        >
                             <i class="fa fa-terminal" aria-hidden="true"></i>
                             Simple Mode
                         </button>
-                        <button class="btn btn-default" type="button">
+                        <button :class="{'btn btn-default':isSimpleMode, 'btn btn-primary':!isSimpleMode}" 
+                            type="button"
+                            @click=selectAdvancedMode
+                        >
                             <i class="fa fa-columns" aria-hidden="true"></i>
                             Advanced Mode
                         </button>
@@ -93,7 +100,7 @@
                 </div>
 
                 <!-- Card input controls Simple Mode-->
-                <div class="row margin-top">
+                <div id='simpleMode' class="row margin-top" :class="{isAdvancedMode:!isSimpleMode}">
                     <div>
                         Enter Card Question and Answer seperated by ;
                     </div>
@@ -106,21 +113,22 @@
                 </div>
 
                 <!-- Card input controls Advanced Mode -->
-                <h3>Question</h3>
-                <div id="question">
-                    
-                    <textarea rows="5" :value="questionRawText" @input="updateQuestion"></textarea>
-                    <div v-html="compiledQuestionMarkdown"></div>
-                </div>
+                <div id="advancedMode" :class="{isSimpleMode:isSimpleMode}">
+                    <h3>Question</h3>
+                    <div id="question">
+                        
+                        <textarea rows="5" :value="questionRawText" @input="updateQuestion"></textarea>
+                        <div v-html="compiledQuestionMarkdown"></div>
+                    </div>
 
-                <!-- Card input controls Advanced Mode -->
-                <h3>Answer</h3>
-                <div id="answer">
-                    
-                    <textarea rows="5" :value="answerRawText" @input="updateAnswer"></textarea>
-                    <div v-html="compiledAnswerMarkdown"></div>
+                    <!-- Card input controls Advanced Mode -->
+                    <h3>Answer</h3>
+                    <div id="answer">
+                        
+                        <textarea rows="5" :value="answerRawText" @input="updateAnswer"></textarea>
+                        <div v-html="compiledAnswerMarkdown"></div>
+                    </div>
                 </div>
-
 
                 <!-- Card Display -->
                 <div class="margin-top">
@@ -146,6 +154,7 @@
                     </div>
                 </div>
             </div>
+            </template>
         </div>
     </div>
 

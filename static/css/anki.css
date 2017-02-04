@@ -37,6 +37,14 @@ tr.editing td.view{
     display: block;
 }
 
+#simpleMode.isAdvancedMode{
+    display: none;
+}
+
+#advancedMode.isSimpleMode{
+    display: none;
+}
+
 #question, #answer {
     background-color: #f6f6f6;
 }

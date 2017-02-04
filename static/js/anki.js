@@ -8,6 +8,7 @@ var app = new Vue({
         selectedDeck : null,
         questionRawText: '',
         answerRawText: '',
+        isSimpleMode: true,
         decks: [
             {
                 deck:'My first learning deck',
@@ -86,6 +87,14 @@ var app = new Vue({
 
         deselectDeck: function(){
             this.selectedDeck = null;
+        },
+
+        selectSimpleMode: function(){
+            this.isSimpleMode = true;
+        },
+
+        selectAdvancedMode: function(){
+            this.isSimpleMode = false;
         },
 
         updateQuestion: _.debounce(function (e){
