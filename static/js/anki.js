@@ -8,6 +8,9 @@ var app = new Vue({
         selectedDeck : null,
         questionRawText: '',
         answerRawText: '',
+        addFlag : false,
+        editFlag : false,
+        editedCard : null,
         isSimpleMode: true,
         decks: [
             {
@@ -87,6 +90,29 @@ var app = new Vue({
 
         deselectDeck: function(){
             this.selectedDeck = null;
+        },
+
+        enterAddMode: function(){
+            this.addFlag = true;
+        },
+
+        exitAddEditMode: function(){
+            this.editFlag = false;
+            this.addFlag = false;
+        },
+
+        saveChange: function(){
+            if(this.editFlag){
+                this.editFlag = false;
+            }
+            else if(this.addDeck){
+
+            }
+        },
+
+        editCard: function(card){
+            this.editFlag = true;
+            this.editCard = card;
         },
 
         selectSimpleMode: function(){

@@ -26,9 +26,9 @@
                 <div class="row">
                     <div class="input-group">
                         <input type="text" class="form-control" v-model="newDeckName" @keyup.enter="addDeck">
-                        <span class="input-group-btn">
+                        <div class="input-group-btn">
                             <button class="btn btn-default" type="button" @click="addDeck">Add Deck</button>
-                        </span>
+                        </div>
                     </div>
                 </div>
 
@@ -70,25 +70,15 @@
             <template v-if="selectedDeck">
             <div id="card" :class="{selectedDeck: selectedDeck}">
                 <h2 v-if="selectedDeck">Deck: {{selectedDeck.deck}}</h2>
-                <!-- Card controls -->
-                <div class="row">
+                <!-- Cards controls -->
+                <div class="row margin-top">
                     <div class="btn-group">
                         <button class="btn btn-default" type="button" @click="deselectDeck">
-                            <i class="fa fa-reply" aria-hidden="true" ></i>
+                            <i class="fa fa-arrow-up" aria-hidden="true"></i>
                         </button>
-                        <button :class="{'btn btn-primary':isSimpleMode, 'btn btn-default':!isSimpleMode}" 
-                            type="button"
-                            @click=selectSimpleMode
-                        >
-                            <i class="fa fa-terminal" aria-hidden="true"></i>
-                            Simple Mode
-                        </button>
-                        <button :class="{'btn btn-default':isSimpleMode, 'btn btn-primary':!isSimpleMode}" 
-                            type="button"
-                            @click=selectAdvancedMode
-                        >
-                            <i class="fa fa-columns" aria-hidden="true"></i>
-                            Advanced Mode
+                        <button class="btn btn-default" type="button" @click="enterAddMode">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            Add New Card
                         </button>
                         <button class="btn btn-default" type="button">
                             <i class="fa fa-list" aria-hidden="true"></i>
@@ -99,36 +89,58 @@
                     </div>
                 </div>
 
-                <!-- Card input controls Simple Mode-->
-                <div id='simpleMode' class="row margin-top" :class="{isAdvancedMode:!isSimpleMode}">
-                    <div>
-                        Enter Card Question and Answer seperated by ;
-                    </div>
-                    <div class="input-group">
-                        <input type="text" class="form-control">
-                        <div class="input-group-btn">
-                            <button class="btn btn-default">Add</button>
+                <!-- Edit Area -->
+                <template v-if="addFlag || editFlag">
+                    <div class="row margin-top">
+                        <div class="btn-group">
+                            <button class="btn btn-default" type="button" @click="exitAddEditMode">
+                                <i class="fa fa-reply" aria-hidden="true" ></i>
+                            </button>
+                            <button class="btn btn-default" type="button">
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                            </button>
+                            <button :class="{'btn btn-primary':isSimpleMode, 'btn btn-default':!isSimpleMode}" 
+                                type="button"
+                                @click=selectSimpleMode
+                            >
+                                <i class="fa fa-terminal" aria-hidden="true"></i>
+                                Simple Mode
+                            </button>
+                            <button :class="{'btn btn-default':isSimpleMode, 'btn btn-primary':!isSimpleMode}" 
+                                type="button"
+                                @click=selectAdvancedMode
+                            >
+                                <i class="fa fa-columns" aria-hidden="true"></i>
+                                Advanced Mode
+                            </button>
                         </div>
                     </div>
-                </div>
 
-                <!-- Card input controls Advanced Mode -->
-                <div id="advancedMode" :class="{isSimpleMode:isSimpleMode}">
-                    <h3>Question</h3>
-                    <div id="question">
-                        
-                        <textarea rows="5" :value="questionRawText" @input="updateQuestion"></textarea>
-                        <div v-html="compiledQuestionMarkdown"></div>
+                    <!-- Card input controls Simple Mode-->
+                    <div id='simpleMode' class="row margin-top" :class="{isAdvancedMode:!isSimpleMode}">
+                        <input type="text" class="form-control" placeholder="Enter Card Question and Answer seperated by ;"
+                            v-item-focus="(addFlag || editFlag) && isSimpleMode"
+                        >
                     </div>
 
                     <!-- Card input controls Advanced Mode -->
-                    <h3>Answer</h3>
-                    <div id="answer">
-                        
-                        <textarea rows="5" :value="answerRawText" @input="updateAnswer"></textarea>
-                        <div v-html="compiledAnswerMarkdown"></div>
+                    <div id="advancedMode" :class="{isSimpleMode:isSimpleMode}">
+                        <h3>Question</h3>
+                        <div id="question">
+                            
+                            <textarea rows="5" :value="questionRawText" @input="updateQuestion"></textarea>
+                            <div v-html="compiledQuestionMarkdown"></div>
+                        </div>
+
+                        <!-- Card input controls Advanced Mode -->
+                        <h3>Answer</h3>
+                        <div id="answer">
+                            
+                            <textarea rows="5" :value="answerRawText" @input="updateAnswer"></textarea>
+                            <div v-html="compiledAnswerMarkdown"></div>
+                        </div>
                     </div>
-                </div>
+                </template>
 
                 <!-- Card Display -->
                 <div class="margin-top">
@@ -144,7 +156,7 @@
                                 <td>{{card.question}}</td>
                                 <td>{{card.answer}}</td>
                                 <td>
-                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    <i class="fa fa-pencil" aria-hidden="true" @click="editCard(card)"></i>
                                 </td>
                                 <td>
                                     <i class="fa fa-times" aria-hidden="true"></i>
