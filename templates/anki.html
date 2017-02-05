@@ -76,7 +76,7 @@
                         <button class="btn btn-default" type="button" @click="deselectDeck">
                             <i class="fa fa-arrow-up" aria-hidden="true"></i>
                         </button>
-                        <button class="btn btn-default" type="button" @click="enterAddMode">
+                        <button class="btn btn-default" type="button" @click="addCard">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             Add New Card
                         </button>
@@ -93,10 +93,10 @@
                 <template v-if="addFlag || editFlag">
                     <div class="row margin-top">
                         <div class="btn-group">
-                            <button class="btn btn-default" type="button" @click="exitAddEditMode">
+                            <button class="btn btn-default" type="button" @click="exitEditMode">
                                 <i class="fa fa-reply" aria-hidden="true" ></i>
                             </button>
-                            <button class="btn btn-default" type="button">
+                            <button class="btn btn-default" type="button" @click="doneEditCard">
                                 <i class="fa fa-floppy-o" aria-hidden="true"></i>
                             </button>
                             <button :class="{'btn btn-primary':isSimpleMode, 'btn btn-default':!isSimpleMode}" 
@@ -119,7 +119,9 @@
                     <!-- Card input controls Simple Mode-->
                     <div id='simpleMode' class="row margin-top" :class="{isAdvancedMode:!isSimpleMode}">
                         <input type="text" class="form-control" placeholder="Enter Card Question and Answer seperated by ;"
+                            v-model = "editedCard.cardRawText"
                             v-item-focus="(addFlag || editFlag) && isSimpleMode"
+                            @keyup.enter = "doneEditCard"
                         >
                     </div>
 

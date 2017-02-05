@@ -92,13 +92,43 @@ var app = new Vue({
             this.selectedDeck = null;
         },
 
-        enterAddMode: function(){
+        addCard: function(){
             this.addFlag = true;
+            this.eidtFlag = false;
+            this.editedCard = {cardRawText:'', question:'', answer:''}
         },
 
-        exitAddEditMode: function(){
+        editCard: function(card){
+            this.addFlag = false;
+            this.editFlag = true;
+            card.cardRawText = card.question + ';' + card.answer;
+            this.editedCard = card;            
+        },
+
+        exitEditMode: function(){
             this.editFlag = false;
             this.addFlag = false;
+            this.editedCard = null;
+        },
+
+        doneEditCard: function(){
+            var card = this.editedCard;
+            var pattern = /(.+);(.+)/g;
+            var match = pattern.exec(card.cardRawText);
+            var q = match[1].trim();
+            var a = match[2].trim();
+            card.question = q;
+            card.answer = a;
+
+            if(this.addFlag){            
+                this.selectedDeck.cards.push(card);
+                this.addCard();
+            }
+            else if(this.editFlag){
+                var index = this.selectedDeck.cards.indexOf(card);
+                this.selectedDeck.cards.splice(index, 1, card);
+                this.exitEditMode();
+            }
         },
 
         saveChange: function(){
@@ -108,11 +138,6 @@ var app = new Vue({
             else if(this.addDeck){
 
             }
-        },
-
-        editCard: function(card){
-            this.editFlag = true;
-            this.editCard = card;
         },
 
         selectSimpleMode: function(){
