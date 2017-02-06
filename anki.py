@@ -18,7 +18,12 @@ def writeDeck():
     cards = deck['cards']
 
     df = pd.DataFrame(cards)
-    df = df[['question', 'answer']]
+    df['questionHTML'] = df['questionHTML'].str.replace(r'\n', '')
+    df['answerHTML'] = df['answerHTML'].str.replace(r'\n', '')
+    print(df)
+    df['finalQuestion'] = df.apply(lambda x: x['question'] if x['isSimpleMode'] else x['questionHTML'], axis=1)
+    df['finalAnswer'] = df.apply(lambda x: x['answer'] if x['isSimpleMode'] else x['answerHTML'], axis=1)
+    df = df[['finalQuestion', 'finalAnswer']]
     df.to_csv(datafolder + '/' + deckName + '.csv', index=False)
     return 'ok'
 

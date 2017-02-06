@@ -8,6 +8,9 @@ var app = new Vue({
         selectedDeck : null,
         questionRawText: '',
         answerRawText: '',
+        // questionHTML: '',
+        // answerHTML: '',
+        cardRawText: '',
         addFlag : false,
         editFlag : false,
         editedCard : null,
@@ -22,19 +25,6 @@ var app = new Vue({
         
         compiledAnswerMarkdown: function(){
             return marked(this.answerRawText, {sanitize: true})
-        },
-
-        cardRawText: {
-            get: function(){
-                return this.questionRawText + ';' + this.answerRawText;
-            },
-            set: function(newValue){
-                var qa = newValue.split(';');
-                this.questionRawText = qa[0];
-                if(qa.length>1){
-                    this.answerRawText = qa[1];
-                }
-            }
         }
     },
 
@@ -89,7 +79,7 @@ var app = new Vue({
         addCard: function(){
             this.addFlag = true;
             this.eidtFlag = false;
-            this.editedCard = {cardRawText:'', question:'', answer:''};
+            this.editedCard = {cardRawText:'', question:'', answer:'', isSimpleMode:true, questionHTML:'', answerHTML:''};
             this.enterEdit(this.editedCard);
         },
 
@@ -102,8 +92,19 @@ var app = new Vue({
         },
 
         enterEdit: function(card){
+            //TODO currently not fully use of vuejs' declaritive feature
+            this.cardRawText = card.cardRawText;
             this.questionRawText = card.question;
             this.answerRawText = card.answer;
+            this.isSimpleMode = card.isSimpleMode;
+            // these codes caused add second card contains first card data
+            // if(card.isSimpleMode){
+            //     this.cardRawText = card.cardRawText;
+            // }
+            // else{
+            //     this.questionRawText = card.questionRawText;
+            //     this.answerRawText = card.answerRawText;
+            // }
         },
 
         exitEditMode: function(){
@@ -115,19 +116,24 @@ var app = new Vue({
         doneEditCard: function(){
             if(this.isSimpleMode){
                 var card = this.editedCard;
-                var pattern = /(.+);(.+)/g;
-                var match = pattern.exec(this.cardRawText);
-                var q = match[1].trim();
-                var a = match[2].trim();
-                card.question = q;
-                card.answer = a;
-                card.cardRawText = q + ';' + a;
+                // var pattern = /(.+);(.+)/g;
+                // var match = pattern.exec(this.cardRawText);
+                // var q = match[1].trim();
+                // var a = match[2].trim();
+                var cardSplit = this.cardRawText.split(';');
+                card.question = cardSplit[0];
+                if(cardSplit.length>1){
+                    card.answer = cardSplit[1];
+                }
             }
             else{
                 var card = this.editedCard;
                 card.question = this.questionRawText;
                 card.answer = this.answerRawText;
                 card.cardRawText = this.cardRawText;
+                card.isSimpleMode = this.isSimpleMode;
+                card.questionHTML = this.compiledQuestionMarkdown;
+                card.answerHTML = this.compiledAnswerMarkdown;
             }
             if(this.addFlag){            
                 this.selectedDeck.cards.push(card);
@@ -151,10 +157,16 @@ var app = new Vue({
 
         selectSimpleMode: function(){
             this.isSimpleMode = true;
+            this.cardRawText = this.questionRawText + ';' + this.answerRawText;
         },
 
         selectAdvancedMode: function(){
             this.isSimpleMode = false;
+            var cardSplit = this.cardRawText.split(';');
+            this.questionRawText = cardSplit[0];
+            if(cardSplit.length>1){
+                this.answerRawText = cardSplit[1];
+            }
         },
 
         updateQuestion: _.debounce(function (e){
