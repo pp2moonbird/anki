@@ -1,3 +1,14 @@
+var STORAGE_KEY = 'anki';
+
+ankiStorage = {
+    fetch: function () {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    },
+    save: function (decks) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
+    }
+}
+
 var app = new Vue({
     el: '#anki',
 
@@ -15,7 +26,16 @@ var app = new Vue({
         editFlag : false,
         editedCard : null,
         isSimpleMode: true,
-        decks: []
+        decks: ankiStorage.fetch()
+    },
+
+    watch:{
+        decks:{
+            handler: function(decks){
+                ankiStorage.save(decks);
+            },
+            deep: true
+        }
     },
 
     computed: {
