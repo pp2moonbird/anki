@@ -82,6 +82,10 @@ var app = new Vue({
             this.selectedDeck = null;
         },
 
+        exportDeck: function(deck){
+            this.$http.post('/deck', JSON.stringify(deck));
+        },
+
         addCard: function(){
             this.addFlag = true;
             this.eidtFlag = false;

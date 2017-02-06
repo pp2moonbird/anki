@@ -37,9 +37,11 @@
                     <div class="row">
                         <table class="table">
                             <tr>
-                                <th class="col-md-10">Deck</th>
+                                <th class="col-md-8">Deck</th>
                                 <th class="col-md-1">Edit</th>
                                 <th class="col-md-1">Delete</th>
+                                <th class="col-md-1">Export</th>
+                                <th class="col-md-1">Import</th>
                             </tr>
                             <!-- For each deck -->
                             <tr v-for="deck in decks" :class="{editing: deck == editedDeck}">
@@ -50,6 +52,12 @@
                                 </td>
                                 <td class="view">
                                     <i class="fa fa-times" aria-hidden="true" @click="deleteDeck(deck)"></i>
+                                </td>
+                                <td class="view">
+                                    <i class="fa fa-download" aria-hidden="true" @click="exportDeck(deck)"></i>
+                                </td>
+                                <td class="view">
+                                    <i class="fa fa-upload" aria-hidden="true" @click="importDeck(deck)"></i>
                                 </td>
                                 <td class="edit">
                                     <input type="text" class="form-control"
