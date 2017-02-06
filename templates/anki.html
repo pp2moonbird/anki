@@ -77,7 +77,7 @@
             <!-- Card area -->
             <template v-if="selectedDeck">
             <div id="card" :class="{selectedDeck: selectedDeck}">
-                <h2 v-if="selectedDeck">Deck: {{selectedDeck.deck}}</h2>
+                <h2 class="deckTitle" v-if="selectedDeck">Deck: {{selectedDeck.deck}}</h2>
                 <!-- Cards controls -->
                 <div class="row margin-top">
                     <div class="btn-group">
