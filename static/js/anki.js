@@ -103,6 +103,10 @@ var app = new Vue({
             this.enterEdit(this.editedCard);
         },
 
+        deleteCard: function(card){
+            this.selectedDeck.cards.$remove(card);
+        },
+
         editCard: function(card){
             this.addFlag = false;
             this.editFlag = true;
