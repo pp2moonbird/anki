@@ -23,7 +23,7 @@ def writeDeck():
     df['finalQuestion'] = df.apply(lambda x: x['question'] if x['isSimpleMode'] else x['questionHTML'], axis=1)
     df['finalAnswer'] = df.apply(lambda x: x['answer'] if x['isSimpleMode'] else x['answerHTML'], axis=1)
     df = df[['finalQuestion', 'finalAnswer']]
-    df.to_csv(datafolder + '/' + deckName + '.csv', index=False)
+    df.to_csv(datafolder + '/' + deckName + '.csv', index=False, header=False, encoding='utf-8')
     return 'ok'
 
 if __name__ == '__main__':
